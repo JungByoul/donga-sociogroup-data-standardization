@@ -1,0 +1,14 @@
+# 실데이터 파일 제외 (public 레포 - 회사 기밀데이터 보호)
+*.xlsx
+*.xls
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+Thumbs.db
+.DS_Store
