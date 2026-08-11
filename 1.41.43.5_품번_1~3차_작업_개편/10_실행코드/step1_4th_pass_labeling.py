@@ -30,7 +30,7 @@ import openpyxl
 from openpyxl.utils import column_index_from_string, get_column_letter
 
 SRC = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.43_품번_3차분리\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번3차판정_v1.6.xlsx")
-DST = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.44_품번_4차분리\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번4차판정_v1.7.xlsx")
+DST = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.43.5_품번_1~3차_작업_개편\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번4차판정_v1.7.xlsx")
 
 SHEET = "Steps_중복제거_32359"
 HEADER_ROW = 4

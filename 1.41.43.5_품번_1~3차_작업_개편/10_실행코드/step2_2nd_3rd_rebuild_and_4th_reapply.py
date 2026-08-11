@@ -16,8 +16,15 @@ O열_2차판정 / O열_3차판정을 기존 값(2차 33건: 수작업 12건+21�
 2차/3차가 바뀌면 "품번(잠정)" 후보 모수 자체가 달라지므로, O열_4차판정/검토메모(코드뭉침/설명문혼입/
 단위값/구조식의심/슬래시검토)도 새 모수 기준으로 처음부터 다시 계산해서 반영한다(step1과 동일 규칙).
 
-[폴더 이력] 이 스크립트부터는 1.41.43(3차분리)이 아니라 1.41.44(4차분리) 소속 작업.
-SRC는 1.41.43에서 완결된 v1.6을 그대로 입력으로 쓰고, DST부터 1.41.44에 저장.
+[폴더 이력] 1~3차판정 라벨 기준 자체를 다시 정리하는 작업이라 4차분리(1.41.44)가 아니라
+1.41.43.5_품번_1~3차_작업_개편 폴더 소속으로 재배치됨. 진짜 4차판정은 이 작업이 끝난 v1.9를
+v2.1로 승격해서 1.41.44에서 새로 시작함.
+SRC는 1.41.43에서 완결된 v1.6을 그대로 입력으로 씀.
+
+[버그 수정 이력] 최초 실행 시 `ws.cell(row, col, value=None)`으로 셀을 지우려 했으나, openpyxl에서
+value=None은 "지우기"가 아니라 "값 안 주고 조회"로 처리되어(파라미터 기본값과 구분 불가) 2차판정
+클리어가 무시되고 v1.6의 옛날 값이 25건 남는 버그가 있었음. `.value = None` 형태로 수정 후 재실행.
+(다행히 4차판정/pool 결과 자체엔 영향 없었음 — 전수 검증 완료)
 """
 import re
 from pathlib import Path
@@ -26,7 +33,7 @@ import openpyxl
 from openpyxl.utils import column_index_from_string, get_column_letter
 
 SRC = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.43_품번_3차분리\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번3차판정_v1.6.xlsx")
-DST = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.44_품번_4차분리\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번4차판정_v1.8.xlsx")
+DST = Path(r"C:\Users\정별\1_Work\1.41_동아쏘시오그룹(2)_데이터_표준화\1.41.43.5_품번_1~3차_작업_개편\20_결과\260810_S-TEPS_입고실적만 ◆_최근3개년_uniq_품번4차판정_v1.8.xlsx")
 
 SHEET = "Steps_중복제거_32359"
 HEADER_ROW = 4
@@ -97,8 +104,8 @@ def main():
         if ws.cell(row=r, column=COL_1차판정).value != LABEL_ITEM:
             continue
 
-        ws.cell(row=r, column=COL_2차판정, value=None)
-        ws.cell(row=r, column=COL_3차판정, value=None)
+        ws.cell(row=r, column=COL_2차판정).value = None
+        ws.cell(row=r, column=COL_3차판정).value = None
 
         raw = ws.cell(row=r, column=COL_품번).value
         name = ws.cell(row=r, column=COL_품목명).value
